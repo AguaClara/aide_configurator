@@ -4,34 +4,24 @@ import ConfigJSONForm from './ConfigJSONForm';
 import {useState} from 'react'
 
 function App() {
-const schema1 = {
-  title: "Enter Onshape Configuration JSON",
-  type: "object",
-  properties: {
-    JSON: {type: "string", title: "Configuration JSON" },
-  }
-};
 
-const [schema, setSchema] = useState('');
+const [schema, setSchema] = useState(null);
 
 
   return (
     <div className="App">
-       {schema === '' ?  
       <ConfigJSONForm
       value={schema}
-      callback={setSchema}/> : <div/>
-      }
+      callback={setSchema}/> 
       {console.log(schema)}
-      {schema === '' ? <div/> : 
-      <Form schema={ {
+      {/* <Form schema={{
         title: "Enter Onshape Configuration JSON",
         type: "object",
         schema
       }}
         onChange={console.log("changed")}
         onSubmit={console.log("submitted")}
-        onError={console.log("errors")} />}
+        onError={console.log("errors")} /> */}
     </div>
     
   );
