@@ -7,10 +7,13 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import {convert} from 'json-to-json-schema';
+import {GenerateSchema} from 'generate-schema';
+import {toJsonSchema} from 'to-json-schema';
 
 const theme = createTheme();
 
 class ConfigJSONForm extends React.Component {
+  
   constructor(props) {
     super(props);
     this.state = this.props.value;
@@ -18,11 +21,14 @@ class ConfigJSONForm extends React.Component {
     this.handleSubmit =this.handleSubmit.bind(this);
   }
 
+
   handleSubmit(event) {
     event.preventDefault();
-    const mySchema = convert(event.target.elements.config.value);
+    //const mySchema = convert(event.target.elements.config.value);
+    console.log(typeof (event.target.elements.config.value));
+    //const mySchema = GenerateSchema.json('schema', event.target.elements.config.value);
+    const mySchema = toJsonSchema(JSON.parse(event.target.elements.config.value));
     console.log(mySchema);
-    console.log(event.target.elements.config.value)
     this.props.callback(mySchema);
   }
    
