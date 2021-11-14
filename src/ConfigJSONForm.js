@@ -6,9 +6,7 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import {convert} from 'json-to-json-schema';
-import {GenerateSchema} from 'generate-schema';
-import {toJsonSchema} from 'to-json-schema';
+var GenerateSchema = require('generate-schema');
 
 const theme = createTheme();
 
@@ -24,10 +22,16 @@ class ConfigJSONForm extends React.Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    //const mySchema = convert(event.target.elements.config.value);
     console.log(typeof (event.target.elements.config.value));
-    //const mySchema = GenerateSchema.json('schema', event.target.elements.config.value);
-    const mySchema = toJsonSchema(JSON.parse(event.target.elements.config.value));
+    console.log(event.target.elements.config.value);
+
+    // const jsonString = '{"id": 2, "name": "An ice sculpture", "price": 12.50, "tags": ["cold", "ice"]}'
+
+    // const json = JSON.parse(jsonString)
+
+    const mySchema = GenerateSchema.json(JSON.parse(event.target.elements.config.value));
+    //const mySchema = GenerateSchema.json(json)
+    delete mySchema.$schema;
     console.log(mySchema);
     this.props.callback(mySchema);
   }
@@ -40,7 +44,7 @@ class ConfigJSONForm extends React.Component {
         <CssBaseline />
         <Box
           sx={{
-            marginTop: 8,
+            marginTop: 16,
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
