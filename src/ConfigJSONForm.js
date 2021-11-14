@@ -17,7 +17,6 @@ class ConfigJSONForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = this.props.value;
-    // this.handleChange = this.handleChange.bind(this);
     this.handleSubmit =this.handleSubmit.bind(this);
   }
 
@@ -32,8 +31,8 @@ class ConfigJSONForm extends React.Component {
 
     var properties = mySchema.properties; 
     var keys = Object.keys(properties);
-    for (var k in keys) {
-      $.extend(properties[keys[k]], {default: inputJson[keys[k]]});
+    for (var k of keys) {
+      $.extend(properties[k], {default: inputJson[k]});
     }
     delete mySchema.$schema;
     console.log(mySchema);
