@@ -6,7 +6,9 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import $ from "jquery";
 var GenerateSchema = require('generate-schema');
+
 
 const theme = createTheme();
 
@@ -15,7 +17,6 @@ class ConfigJSONForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = this.props.value;
-    // this.handleChange = this.handleChange.bind(this);
     this.handleSubmit =this.handleSubmit.bind(this);
   }
 
@@ -25,12 +26,14 @@ class ConfigJSONForm extends React.Component {
     console.log(typeof (event.target.elements.config.value));
     console.log(event.target.elements.config.value);
 
-    // const jsonString = '{"id": 2, "name": "An ice sculpture", "price": 12.50, "tags": ["cold", "ice"]}'
+    var inputJson = JSON.parse(event.target.elements.config.value);
+    const mySchema = GenerateSchema.json(inputJson);
 
-    // const json = JSON.parse(jsonString)
-
-    const mySchema = GenerateSchema.json(JSON.parse(event.target.elements.config.value));
-    //const mySchema = GenerateSchema.json(json)
+    var properties = mySchema.properties; 
+    var keys = Object.keys(properties);
+    for (var k of keys) {
+      $.extend(properties[k], {default: inputJson[k]});
+    }
     delete mySchema.$schema;
     console.log(mySchema);
     this.props.callback(mySchema);
